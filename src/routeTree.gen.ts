@@ -24,6 +24,7 @@ import { Route as AuthenticatedTicketsTicketIdRouteImport } from './routes/_auth
 import { Route as AuthenticatedHostMembersRouteImport } from './routes/_authenticated/host.members'
 import { Route as AuthenticatedHostDashboardRouteImport } from './routes/_authenticated/host.dashboard'
 import { Route as AuthenticatedEventsNewRouteImport } from './routes/_authenticated/events.new'
+import { Route as AuthenticatedEventsEventIdExportRouteImport } from './routes/_authenticated/events.$eventId.export'
 import { Route as AuthenticatedEventsEventIdCheckInRouteImport } from './routes/_authenticated/events.$eventId.check-in'
 
 const ExploreRoute = ExploreRouteImport.update({
@@ -103,6 +104,12 @@ const AuthenticatedEventsNewRoute = AuthenticatedEventsNewRouteImport.update({
   path: '/events/new',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedEventsEventIdExportRoute =
+  AuthenticatedEventsEventIdExportRouteImport.update({
+    id: '/events/$eventId/export',
+    path: '/events/$eventId/export',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedEventsEventIdCheckInRoute =
   AuthenticatedEventsEventIdCheckInRouteImport.update({
     id: '/events/$eventId/check-in',
@@ -126,6 +133,7 @@ export interface FileRoutesByFullPath {
   '/host/members': typeof AuthenticatedHostMembersRoute
   '/tickets/$ticketId': typeof AuthenticatedTicketsTicketIdRoute
   '/events/$eventId/check-in': typeof AuthenticatedEventsEventIdCheckInRoute
+  '/events/$eventId/export': typeof AuthenticatedEventsEventIdExportRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -143,6 +151,7 @@ export interface FileRoutesByTo {
   '/host/members': typeof AuthenticatedHostMembersRoute
   '/tickets/$ticketId': typeof AuthenticatedTicketsTicketIdRoute
   '/events/$eventId/check-in': typeof AuthenticatedEventsEventIdCheckInRoute
+  '/events/$eventId/export': typeof AuthenticatedEventsEventIdExportRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -162,6 +171,7 @@ export interface FileRoutesById {
   '/_authenticated/host/members': typeof AuthenticatedHostMembersRoute
   '/_authenticated/tickets/$ticketId': typeof AuthenticatedTicketsTicketIdRoute
   '/_authenticated/events/$eventId/check-in': typeof AuthenticatedEventsEventIdCheckInRoute
+  '/_authenticated/events/$eventId/export': typeof AuthenticatedEventsEventIdExportRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -181,6 +191,7 @@ export interface FileRouteTypes {
     | '/host/members'
     | '/tickets/$ticketId'
     | '/events/$eventId/check-in'
+    | '/events/$eventId/export'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -198,6 +209,7 @@ export interface FileRouteTypes {
     | '/host/members'
     | '/tickets/$ticketId'
     | '/events/$eventId/check-in'
+    | '/events/$eventId/export'
   id:
     | '__root__'
     | '/'
@@ -216,6 +228,7 @@ export interface FileRouteTypes {
     | '/_authenticated/host/members'
     | '/_authenticated/tickets/$ticketId'
     | '/_authenticated/events/$eventId/check-in'
+    | '/_authenticated/events/$eventId/export'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -335,6 +348,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEventsNewRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/events/$eventId/export': {
+      id: '/_authenticated/events/$eventId/export'
+      path: '/events/$eventId/export'
+      fullPath: '/events/$eventId/export'
+      preLoaderRoute: typeof AuthenticatedEventsEventIdExportRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/events/$eventId/check-in': {
       id: '/_authenticated/events/$eventId/check-in'
       path: '/events/$eventId/check-in'
@@ -355,6 +375,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedHostMembersRoute: typeof AuthenticatedHostMembersRoute
   AuthenticatedTicketsTicketIdRoute: typeof AuthenticatedTicketsTicketIdRoute
   AuthenticatedEventsEventIdCheckInRoute: typeof AuthenticatedEventsEventIdCheckInRoute
+  AuthenticatedEventsEventIdExportRoute: typeof AuthenticatedEventsEventIdExportRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
@@ -368,6 +389,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedTicketsTicketIdRoute: AuthenticatedTicketsTicketIdRoute,
   AuthenticatedEventsEventIdCheckInRoute:
     AuthenticatedEventsEventIdCheckInRoute,
+  AuthenticatedEventsEventIdExportRoute: AuthenticatedEventsEventIdExportRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(

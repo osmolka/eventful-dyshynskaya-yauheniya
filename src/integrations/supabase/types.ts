@@ -291,6 +291,15 @@ export type Database = {
     Functions: {
       accept_host_invite: { Args: { _token: string }; Returns: string }
       can_check_in_event: { Args: { _event_id: string }; Returns: boolean }
+      export_event_rsvps: {
+        Args: { _event_id: string }
+        Returns: {
+          checked_in_at: string
+          email: string
+          name: string
+          rsvp_status: string
+        }[]
+      }
       generate_ticket_code: { Args: never; Returns: string }
       is_host_owner: { Args: { _host_id: string }; Returns: boolean }
       is_host_role: { Args: { _host_id: string }; Returns: boolean }

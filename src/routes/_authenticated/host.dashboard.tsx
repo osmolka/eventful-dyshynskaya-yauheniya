@@ -146,11 +146,18 @@ function Section({ title, events, emptyText }: { title: string; events: EventRow
                   <CardDescription>{new Date(e.start_at).toLocaleString()}</CardDescription>
                   <Badge variant={e.status === "published" ? "default" : "secondary"}>{e.status}</Badge>
                 </div>
-                <Button asChild size="sm" variant="outline">
-                  <Link to="/events/$eventId/check-in" params={{ eventId: e.id }}>
-                    Check-in
-                  </Link>
-                </Button>
+                <div className="flex flex-col gap-2">
+                  <Button asChild size="sm" variant="outline">
+                    <Link to="/events/$eventId/check-in" params={{ eventId: e.id }}>
+                      Check-in
+                    </Link>
+                  </Button>
+                  <Button asChild size="sm" variant="outline">
+                    <Link to="/events/$eventId/export" params={{ eventId: e.id }}>
+                      Export CSV
+                    </Link>
+                  </Button>
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-3 gap-3 text-center">
