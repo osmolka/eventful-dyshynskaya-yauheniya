@@ -96,7 +96,7 @@ function Index() {
           </Button>
           {!user && (
             <Button asChild variant="outline">
-              <Link to="/auth">Sign up free</Link>
+              <Link to="/auth" search={{ redirect: "/", mode: "signup" }}>Sign up free</Link>
             </Button>
           )}
         </div>
