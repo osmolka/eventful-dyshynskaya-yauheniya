@@ -178,11 +178,26 @@ function EventDetailPage() {
                 : `${confirmedCount} confirmed`}
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="space-y-4">
             {myRsvp ? (
-              <Badge variant={myRsvp.status === "confirmed" ? "default" : "secondary"}>
-                {myRsvp.status === "confirmed" ? "You're going" : "Waitlisted"}
-              </Badge>
+              <>
+                <Badge variant={myRsvp.status === "confirmed" ? "default" : "secondary"}>
+                  {myRsvp.status === "confirmed" ? "You're going" : "Waitlisted"}
+                </Badge>
+                {myRsvp.status === "confirmed" && myTicket && (
+                  <div className="flex flex-col items-center gap-3 rounded-md border bg-background p-4">
+                    <div className="rounded-md bg-white p-3">
+                      <QRCodeSVG value={myTicket.code} size={160} level="M" />
+                    </div>
+                    <div className="text-center">
+                      <p className="font-mono text-sm tracking-widest">{myTicket.code}</p>
+                      <p className="text-xs text-muted-foreground">
+                        Issued {new Date(myTicket.created_at).toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </>
             ) : (
               <Button onClick={handleRsvp} disabled={submitting}>
                 {submitting ? "Submitting..." : isFull ? "Join waitlist" : "RSVP"}
