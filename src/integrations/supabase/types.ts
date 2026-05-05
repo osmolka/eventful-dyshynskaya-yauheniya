@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      content_reports: {
+        Row: {
+          created_at: string
+          id: string
+          reason: string
+          reporter_id: string
+          resolved_at: string | null
+          resolved_by: string | null
+          target_id: string
+          target_type: Database["public"]["Enums"]["report_target"]
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          reason: string
+          reporter_id: string
+          resolved_at?: string | null
+          resolved_by?: string | null
+          target_id: string
+          target_type: Database["public"]["Enums"]["report_target"]
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          reason?: string
+          reporter_id?: string
+          resolved_at?: string | null
+          resolved_by?: string | null
+          target_id?: string
+          target_type?: Database["public"]["Enums"]["report_target"]
+        }
+        Relationships: []
+      }
       event_feedback: {
         Row: {
           comment: string | null
@@ -49,6 +82,7 @@ export type Database = {
           caption: string | null
           created_at: string
           event_id: string
+          hidden: boolean
           id: string
           reviewed_at: string | null
           reviewed_by: string | null
@@ -61,6 +95,7 @@ export type Database = {
           caption?: string | null
           created_at?: string
           event_id: string
+          hidden?: boolean
           id?: string
           reviewed_at?: string | null
           reviewed_by?: string | null
@@ -73,6 +108,7 @@ export type Database = {
           caption?: string | null
           created_at?: string
           event_id?: string
+          hidden?: boolean
           id?: string
           reviewed_at?: string | null
           reviewed_by?: string | null
@@ -98,6 +134,7 @@ export type Database = {
           created_at: string
           description: string | null
           end_at: string
+          hidden: boolean
           host_id: string
           id: string
           online_link: string | null
@@ -115,6 +152,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           end_at: string
+          hidden?: boolean
           host_id: string
           id?: string
           online_link?: string | null
@@ -132,6 +170,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           end_at?: string
+          hidden?: boolean
           host_id?: string
           id?: string
           online_link?: string | null
@@ -380,6 +419,13 @@ export type Database = {
       generate_ticket_code: { Args: never; Returns: string }
       is_host_owner: { Args: { _host_id: string }; Returns: boolean }
       is_host_role: { Args: { _host_id: string }; Returns: boolean }
+      is_report_host: {
+        Args: {
+          _target_id: string
+          _target_type: Database["public"]["Enums"]["report_target"]
+        }
+        Returns: boolean
+      }
       promote_waitlist: { Args: { _event_id: string }; Returns: undefined }
     }
     Enums: {
@@ -388,6 +434,7 @@ export type Database = {
       event_visibility: "public" | "unlisted"
       host_member_role: "host" | "checker"
       photo_status: "pending" | "approved" | "rejected"
+      report_target: "event" | "photo"
       rsvp_status: "confirmed" | "waitlisted"
     }
     CompositeTypes: {
@@ -521,6 +568,7 @@ export const Constants = {
       event_visibility: ["public", "unlisted"],
       host_member_role: ["host", "checker"],
       photo_status: ["pending", "approved", "rejected"],
+      report_target: ["event", "photo"],
       rsvp_status: ["confirmed", "waitlisted"],
     },
   },
