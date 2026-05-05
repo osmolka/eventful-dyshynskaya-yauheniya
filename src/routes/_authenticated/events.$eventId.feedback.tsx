@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { PageLoader } from "@/components/Spinner";
 
 export const Route = createFileRoute("/_authenticated/events/$eventId/feedback")({
   component: FeedbackPage,
@@ -101,7 +102,7 @@ function FeedbackPage() {
   };
 
   if (loading || event === undefined || confirmed === null) {
-    return <div className="p-10 text-sm text-muted-foreground">Loading...</div>;
+    return <PageLoader />;
   }
   if (!event) {
     return <div className="p-10 text-sm text-muted-foreground">Event not found.</div>;

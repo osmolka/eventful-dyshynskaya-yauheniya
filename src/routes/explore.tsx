@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Spinner } from "@/components/Spinner";
 import {
   Select,
   SelectContent,
@@ -150,7 +151,7 @@ function ExplorePage() {
         </div>
 
         {events === null ? (
-          <p className="text-sm text-muted-foreground">Loading...</p>
+          <div className="flex justify-center py-16"><Spinner className="h-8 w-8" /></div>
         ) : events.length === 0 ? (
           <p className="text-sm text-muted-foreground">No events match your filters.</p>
         ) : (

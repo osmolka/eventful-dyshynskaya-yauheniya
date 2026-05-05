@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { PageLoader } from "@/components/Spinner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -85,7 +86,7 @@ function HostDashboardPage() {
   }, [user]);
 
   if (isHost === null) {
-    return <div className="p-10 text-sm text-muted-foreground">Loading...</div>;
+    return <PageLoader />;
   }
   if (!isHost) {
     return (

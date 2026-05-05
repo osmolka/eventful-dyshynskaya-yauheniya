@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ReportButton } from "@/components/ReportButton";
 import { toast } from "sonner";
+import { PageLoader } from "@/components/Spinner";
 
 export const Route = createFileRoute("/events/$eventId/gallery")({
   component: GalleryPage,
@@ -112,7 +113,7 @@ function GalleryPage() {
     load();
   };
 
-  if (event === undefined) return <div className="p-10 text-sm text-muted-foreground">Loading...</div>;
+  if (event === undefined) return <PageLoader />;
   if (event === null || event.status !== "published")
     return <div className="p-10 text-sm text-muted-foreground">Event not found.</div>;
 

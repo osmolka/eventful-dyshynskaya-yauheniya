@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState, useCallback } from "react";
+import { Spinner } from "@/components/Spinner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -90,7 +91,7 @@ function MyEventsPage() {
             </CardContent>
           </Card>
         ) : events === null ? (
-          <p className="text-sm text-muted-foreground">Loading...</p>
+          <div className="flex justify-center py-16"><Spinner className="h-8 w-8" /></div>
         ) : events.length === 0 ? (
           <p className="text-sm text-muted-foreground">No events yet.</p>
         ) : (

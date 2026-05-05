@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
+import { Spinner } from "@/components/Spinner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -100,7 +101,7 @@ function BecomeHostPage() {
         </CardHeader>
         <CardContent>
           {loading ? (
-            <p className="text-sm text-muted-foreground">Loading...</p>
+            <div className="flex justify-center py-16"><Spinner className="h-8 w-8" /></div>
           ) : hasHost || role !== "attendee" ? (
             <p className="text-sm text-muted-foreground">
               You're already registered as a Host (or not eligible).

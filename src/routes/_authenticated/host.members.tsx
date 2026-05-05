@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState, useCallback } from "react";
+import { Spinner } from "@/components/Spinner";
 import { supabase } from "@/integrations/supabase/client";
 import { BackButton } from "@/components/BackButton";
 import { useAuth } from "@/contexts/AuthContext";
@@ -180,7 +181,7 @@ function HostMembersPage() {
           </CardHeader>
           <CardContent className="space-y-2">
             {invites === null ? (
-              <p className="text-sm text-muted-foreground">Loading...</p>
+              <div className="flex justify-center py-16"><Spinner className="h-8 w-8" /></div>
             ) : invites.filter((i) => !i.used_at).length === 0 ? (
               <p className="text-sm text-muted-foreground">No pending invites.</p>
             ) : (
@@ -212,7 +213,7 @@ function HostMembersPage() {
           </CardHeader>
           <CardContent className="space-y-2">
             {members === null ? (
-              <p className="text-sm text-muted-foreground">Loading...</p>
+              <div className="flex justify-center py-16"><Spinner className="h-8 w-8" /></div>
             ) : members.length === 0 ? (
               <p className="text-sm text-muted-foreground">No additional members yet.</p>
             ) : (

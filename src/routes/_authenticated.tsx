@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet, Navigate } from "@tanstack/react-router";
 import { useAuth } from "@/contexts/AuthContext";
+import { PageLoader } from "@/components/Spinner";
 
 export const Route = createFileRoute("/_authenticated")({
   component: AuthenticatedLayout,
@@ -10,9 +11,7 @@ function AuthenticatedLayout() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center text-muted-foreground">
-        Loading...
-      </div>
+      <PageLoader />
     );
   }
 

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ReportButton } from "@/components/ReportButton";
+import { PageLoader } from "@/components/Spinner";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/events/$eventId")({
@@ -130,7 +131,7 @@ function EventDetailPage() {
   };
 
   if (event === undefined || authLoading) {
-    return <div className="p-10 text-sm text-muted-foreground">Loading...</div>;
+    return <PageLoader />;
   }
   if (event === null || event.status !== "published") {
     return <div className="p-10 text-sm text-muted-foreground">Event not found.</div>;

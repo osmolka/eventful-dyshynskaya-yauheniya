@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { BackButton } from "@/components/BackButton";
 import { useAuth } from "@/contexts/AuthContext";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Spinner } from "@/components/Spinner";
 
 export const Route = createFileRoute("/_authenticated/my-tickets")({
   component: MyTicketsPage,
@@ -59,7 +60,7 @@ function MyTicketsPage() {
         </header>
 
         {tickets === null ? (
-          <p className="text-sm text-muted-foreground">Loading...</p>
+          <div className="flex justify-center py-16"><Spinner className="h-8 w-8" /></div>
         ) : tickets.length === 0 ? (
           <p className="text-sm text-muted-foreground">No upcoming tickets.</p>
         ) : (
