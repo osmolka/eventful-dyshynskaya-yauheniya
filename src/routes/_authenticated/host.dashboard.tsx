@@ -157,6 +157,11 @@ function Section({ title, events, emptyText }: { title: string; events: EventRow
                       Export CSV
                     </Link>
                   </Button>
+                  <Button asChild size="sm" variant="outline">
+                    <Link to="/events/$eventId/feedback-summary" params={{ eventId: e.id }}>
+                      Feedback
+                    </Link>
+                  </Button>
                 </div>
               </CardHeader>
               <CardContent>
