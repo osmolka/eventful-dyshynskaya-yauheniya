@@ -76,28 +76,72 @@ export type Database = {
           },
         ]
       }
-      host_checkers: {
+      host_invites: {
+        Row: {
+          created_at: string
+          created_by: string
+          host_id: string
+          id: string
+          role: Database["public"]["Enums"]["host_member_role"]
+          token: string
+          used_at: string | null
+          used_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          host_id: string
+          id?: string
+          role: Database["public"]["Enums"]["host_member_role"]
+          token?: string
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          host_id?: string
+          id?: string
+          role?: Database["public"]["Enums"]["host_member_role"]
+          token?: string
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "host_invites_host_id_fkey"
+            columns: ["host_id"]
+            isOneToOne: false
+            referencedRelation: "hosts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      host_members: {
         Row: {
           created_at: string
           host_id: string
           id: string
           profile_id: string
+          role: Database["public"]["Enums"]["host_member_role"]
         }
         Insert: {
           created_at?: string
           host_id: string
           id?: string
           profile_id: string
+          role: Database["public"]["Enums"]["host_member_role"]
         }
         Update: {
           created_at?: string
           host_id?: string
           id?: string
           profile_id?: string
+          role?: Database["public"]["Enums"]["host_member_role"]
         }
         Relationships: [
           {
-            foreignKeyName: "host_checkers_host_id_fkey"
+            foreignKeyName: "host_members_host_id_fkey"
             columns: ["host_id"]
             isOneToOne: false
             referencedRelation: "hosts"
@@ -245,14 +289,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      accept_host_invite: { Args: { _token: string }; Returns: string }
       can_check_in_event: { Args: { _event_id: string }; Returns: boolean }
       generate_ticket_code: { Args: never; Returns: string }
+      is_host_owner: { Args: { _host_id: string }; Returns: boolean }
+      is_host_role: { Args: { _host_id: string }; Returns: boolean }
       promote_waitlist: { Args: { _event_id: string }; Returns: undefined }
     }
     Enums: {
       app_role: "attendee" | "host" | "checker"
       event_status: "draft" | "published"
       event_visibility: "public" | "unlisted"
+      host_member_role: "host" | "checker"
       rsvp_status: "confirmed" | "waitlisted"
     }
     CompositeTypes: {
@@ -384,6 +432,7 @@ export const Constants = {
       app_role: ["attendee", "host", "checker"],
       event_status: ["draft", "published"],
       event_visibility: ["public", "unlisted"],
+      host_member_role: ["host", "checker"],
       rsvp_status: ["confirmed", "waitlisted"],
     },
   },
