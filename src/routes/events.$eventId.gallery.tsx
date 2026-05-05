@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { ReportButton } from "@/components/ReportButton";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/events/$eventId/gallery")({
