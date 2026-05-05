@@ -18,6 +18,7 @@ import { Route as EventsEventIdRouteImport } from './routes/events.$eventId'
 import { Route as AuthenticatedMyEventsRouteImport } from './routes/_authenticated/my-events'
 import { Route as AuthenticatedBecomeHostRouteImport } from './routes/_authenticated/become-host'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
+import { Route as AuthenticatedTicketsTicketIdRouteImport } from './routes/_authenticated/tickets.$ticketId'
 import { Route as AuthenticatedEventsNewRouteImport } from './routes/_authenticated/events.new'
 
 const ExploreRoute = ExploreRouteImport.update({
@@ -64,6 +65,12 @@ const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
   path: '/account',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedTicketsTicketIdRoute =
+  AuthenticatedTicketsTicketIdRouteImport.update({
+    id: '/tickets/$ticketId',
+    path: '/tickets/$ticketId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedEventsNewRoute = AuthenticatedEventsNewRouteImport.update({
   id: '/events/new',
   path: '/events/new',
@@ -80,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/events/$eventId': typeof EventsEventIdRoute
   '/hosts/$hostId': typeof HostsHostIdRoute
   '/events/new': typeof AuthenticatedEventsNewRoute
+  '/tickets/$ticketId': typeof AuthenticatedTicketsTicketIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -91,6 +99,7 @@ export interface FileRoutesByTo {
   '/events/$eventId': typeof EventsEventIdRoute
   '/hosts/$hostId': typeof HostsHostIdRoute
   '/events/new': typeof AuthenticatedEventsNewRoute
+  '/tickets/$ticketId': typeof AuthenticatedTicketsTicketIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -104,6 +113,7 @@ export interface FileRoutesById {
   '/events/$eventId': typeof EventsEventIdRoute
   '/hosts/$hostId': typeof HostsHostIdRoute
   '/_authenticated/events/new': typeof AuthenticatedEventsNewRoute
+  '/_authenticated/tickets/$ticketId': typeof AuthenticatedTicketsTicketIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/events/$eventId'
     | '/hosts/$hostId'
     | '/events/new'
+    | '/tickets/$ticketId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/events/$eventId'
     | '/hosts/$hostId'
     | '/events/new'
+    | '/tickets/$ticketId'
   id:
     | '__root__'
     | '/'
@@ -140,6 +152,7 @@ export interface FileRouteTypes {
     | '/events/$eventId'
     | '/hosts/$hostId'
     | '/_authenticated/events/new'
+    | '/_authenticated/tickets/$ticketId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -216,6 +229,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccountRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/tickets/$ticketId': {
+      id: '/_authenticated/tickets/$ticketId'
+      path: '/tickets/$ticketId'
+      fullPath: '/tickets/$ticketId'
+      preLoaderRoute: typeof AuthenticatedTicketsTicketIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/events/new': {
       id: '/_authenticated/events/new'
       path: '/events/new'
@@ -231,6 +251,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedBecomeHostRoute: typeof AuthenticatedBecomeHostRoute
   AuthenticatedMyEventsRoute: typeof AuthenticatedMyEventsRoute
   AuthenticatedEventsNewRoute: typeof AuthenticatedEventsNewRoute
+  AuthenticatedTicketsTicketIdRoute: typeof AuthenticatedTicketsTicketIdRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
@@ -238,6 +259,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedBecomeHostRoute: AuthenticatedBecomeHostRoute,
   AuthenticatedMyEventsRoute: AuthenticatedMyEventsRoute,
   AuthenticatedEventsNewRoute: AuthenticatedEventsNewRoute,
+  AuthenticatedTicketsTicketIdRoute: AuthenticatedTicketsTicketIdRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(

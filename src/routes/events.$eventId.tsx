@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { supabase } from "@/integrations/supabase/client";
@@ -35,7 +35,7 @@ function EventDetailPage() {
   const [event, setEvent] = useState<EventRow | null | undefined>(undefined);
   const [confirmedCount, setConfirmedCount] = useState<number>(0);
   const [myRsvp, setMyRsvp] = useState<{ id: string; status: string } | null>(null);
-  const [myTicket, setMyTicket] = useState<{ code: string; created_at: string } | null>(null);
+  const [myTicket, setMyTicket] = useState<{ id: string; code: string; created_at: string } | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -71,7 +71,7 @@ function EventDetailPage() {
       if (data && data.status === "confirmed") {
         const { data: ticket } = await supabase
           .from("tickets")
-          .select("code, created_at")
+          .select("id, code, created_at")
           .eq("rsvp_id", data.id)
           .maybeSingle();
         setMyTicket(ticket ?? null);
@@ -200,6 +200,11 @@ function EventDetailPage() {
                         Issued {new Date(myTicket.created_at).toLocaleString()}
                       </p>
                     </div>
+                    <Button asChild variant="outline" size="sm">
+                      <Link to="/tickets/$ticketId" params={{ ticketId: myTicket.id }}>
+                        View ticket
+                      </Link>
+                    </Button>
                   </div>
                 )}
               </>
