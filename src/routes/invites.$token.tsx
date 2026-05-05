@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import { PageLoader } from "@/components/Spinner";
 import { BackButton } from "@/components/BackButton";
 
 export const Route = createFileRoute("/invites/$token")({
@@ -38,7 +39,7 @@ function AcceptInvitePage() {
   }, [user, loading, navigate, token]);
 
   if (loading || !user) {
-    return <div className="p-10 text-sm text-muted-foreground">Loading...</div>;
+    return <PageLoader />;
   }
 
   return (

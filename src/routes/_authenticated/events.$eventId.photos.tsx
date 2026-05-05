@@ -6,6 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import { PageLoader } from "@/components/Spinner";
 
 export const Route = createFileRoute("/_authenticated/events/$eventId/photos")({
   component: PhotoModerationPage,
@@ -74,7 +75,7 @@ function PhotoModerationPage() {
     load();
   };
 
-  if (allowed === null) return <div className="p-10 text-sm text-muted-foreground">Loading...</div>;
+  if (allowed === null) return <PageLoader />;
   if (!allowed) return <div className="p-10 text-sm text-muted-foreground">Access denied.</div>;
 
   const pending = photos.filter((p) => p.status === "pending");

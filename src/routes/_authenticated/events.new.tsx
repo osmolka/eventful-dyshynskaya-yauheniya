@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
+import { PageLoader } from "@/components/Spinner";
 
 export const Route = createFileRoute("/_authenticated/events/new")({
   component: NewEventPage,
@@ -97,9 +98,7 @@ function NewEventPage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center text-muted-foreground">
-        Loading...
-      </div>
+      <PageLoader />
     );
   }
 

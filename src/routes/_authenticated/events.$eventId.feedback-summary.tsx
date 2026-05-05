@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { PageLoader } from "@/components/Spinner";
 import { supabase } from "@/integrations/supabase/client";
 import { BackButton } from "@/components/BackButton";
 import { useAuth } from "@/contexts/AuthContext";
@@ -69,7 +70,7 @@ function SummaryPage() {
   }, [eventId, user, loading]);
 
   if (loading || allowed === null) {
-    return <div className="p-10 text-sm text-muted-foreground">Loading...</div>;
+    return <PageLoader />;
   }
   if (!allowed) {
     return (

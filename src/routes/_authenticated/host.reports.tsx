@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
+import { PageLoader } from "@/components/Spinner";
 
 export const Route = createFileRoute("/_authenticated/host/reports")({
   component: HostReportsPage,
@@ -125,7 +126,7 @@ function HostReportsPage() {
     load();
   };
 
-  if (items === null) return <div className="p-10 text-sm text-muted-foreground">Loading...</div>;
+  if (items === null) return <PageLoader />;
 
   const open = items.filter((r) => !r.resolved_at);
   const resolved = items.filter((r) => r.resolved_at);
