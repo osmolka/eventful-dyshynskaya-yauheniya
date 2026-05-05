@@ -23,6 +23,8 @@ const exploreSearchSchema = z.object({
   includePast: fallback(z.boolean(), false).default(false),
 });
 
+type ExploreSearch = z.infer<typeof exploreSearchSchema>;
+
 export const Route = createFileRoute("/explore")({
   validateSearch: zodValidator(exploreSearchSchema),
   component: ExplorePage,
