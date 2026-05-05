@@ -35,6 +35,8 @@ function CheckInPage() {
   const [code, setCode] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [lastResult, setLastResult] = useState<string | null>(null);
+  const [lastCheckIn, setLastCheckIn] = useState<{ ticketId: string; code: string } | null>(null);
+  const [undoing, setUndoing] = useState(false);
 
   useEffect(() => {
     if (loading || !user) return;
