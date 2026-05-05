@@ -94,6 +94,11 @@ function EventDetailPage() {
         { event: "*", schema: "public", table: "rsvps", filter: `event_id=eq.${eventId}` },
         () => refreshRsvpInfo(),
       )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "tickets" },
+        () => refreshRsvpInfo(),
+      )
       .subscribe();
     return () => {
       supabase.removeChannel(channel);
