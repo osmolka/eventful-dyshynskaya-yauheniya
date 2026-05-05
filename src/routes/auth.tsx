@@ -1,5 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
+import { z } from "zod";
+import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,20 +10,26 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 
+const authSearchSchema = z.object({
+  redirect: fallback(z.string(), "/").default("/"),
+});
+
 export const Route = createFileRoute("/auth")({
+  validateSearch: zodValidator(authSearchSchema),
   component: AuthPage,
 });
 
 function AuthPage() {
   const { user, loading, signIn, signUp } = useAuth();
+  const { redirect } = Route.useSearch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    if (!loading && user) navigate({ to: "/" });
-  }, [user, loading, navigate]);
+    if (!loading && user) navigate({ to: redirect });
+  }, [user, loading, navigate, redirect]);
 
   const handleSignIn = async (e: FormEvent) => {
     e.preventDefault();
