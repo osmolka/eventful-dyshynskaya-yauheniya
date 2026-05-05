@@ -33,6 +33,7 @@ function NewEventPage() {
   const [onlineLink, setOnlineLink] = useState("");
   const [capacity, setCapacity] = useState(50);
   const [coverFile, setCoverFile] = useState<File | null>(null);
+  const [visibility, setVisibility] = useState<"public" | "unlisted">("public");
 
   useEffect(() => {
     if (!user) return;
@@ -77,6 +78,7 @@ function NewEventPage() {
           online_link: locationKind === "online" ? onlineLink : null,
           capacity,
           cover_image_url: coverUrl,
+          visibility,
         })
         .select("id")
         .single();
@@ -196,6 +198,27 @@ function NewEventPage() {
               <Field label="Cover image">
                 <Input type="file" accept="image/*" onChange={(e) => setCoverFile(e.target.files?.[0] ?? null)} />
               </Field>
+
+              <div className="space-y-3">
+                <Label>Visibility</Label>
+                <RadioGroup
+                  value={visibility}
+                  onValueChange={(v) => setVisibility(v as "public" | "unlisted")}
+                  className="flex gap-4"
+                >
+                  <div className="flex items-center gap-2">
+                    <RadioGroupItem value="public" id="vis-public" />
+                    <Label htmlFor="vis-public" className="font-normal">Public</Label>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <RadioGroupItem value="unlisted" id="vis-unlisted" />
+                    <Label htmlFor="vis-unlisted" className="font-normal">Unlisted (link only)</Label>
+                  </div>
+                </RadioGroup>
+                <p className="text-xs text-muted-foreground">
+                  Only Published events are visible to others. Unlisted events require the direct link.
+                </p>
+              </div>
 
               <Button type="submit" className="w-full" disabled={submitting}>
                 {submitting ? "Saving..." : "Create draft"}
