@@ -80,10 +80,10 @@ export function AppHeader() {
           ) : (
             <>
               <Button asChild variant="ghost" size="sm">
-                <Link to="/auth">Sign in</Link>
+                <Link to="/auth" search={{ redirect: "/", mode: "signin" }}>Sign in</Link>
               </Button>
               <Button asChild size="sm">
-                <Link to="/auth">Sign up</Link>
+                <Link to="/auth" search={{ redirect: "/", mode: "signup" }}>Sign up</Link>
               </Button>
             </>
           )}

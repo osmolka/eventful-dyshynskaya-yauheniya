@@ -12,6 +12,7 @@ import { toast } from "sonner";
 
 const authSearchSchema = z.object({
   redirect: fallback(z.string(), "/").default("/"),
+  mode: fallback(z.enum(["signin", "signup"]), "signin").default("signin"),
 });
 
 export const Route = createFileRoute("/auth")({
@@ -21,7 +22,7 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const { user, loading, signIn, signUp } = useAuth();
-  const { redirect } = Route.useSearch();
+  const { redirect, mode } = Route.useSearch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -57,7 +58,7 @@ function AuthPage() {
           <CardDescription>Sign in or create an account to continue.</CardDescription>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="signin">
+          <Tabs defaultValue={mode}>
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="signin">Sign in</TabsTrigger>
               <TabsTrigger value="signup">Sign up</TabsTrigger>
