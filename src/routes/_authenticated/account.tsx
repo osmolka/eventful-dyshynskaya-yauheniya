@@ -57,6 +57,9 @@ function AccountPage() {
               </Button>
             </>
           )}
+          <Button asChild variant="secondary" className="w-full">
+            <Link to="/my-tickets">My tickets</Link>
+          </Button>
           <Button variant="outline" className="w-full" onClick={() => signOut()}>
             Sign out
           </Button>
