@@ -73,6 +73,17 @@ function EventDetailPage() {
   useEffect(() => {
     if (!event) return;
     refreshRsvpInfo();
+    const channel = supabase
+      .channel(`rsvps:${eventId}`)
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "rsvps", filter: `event_id=eq.${eventId}` },
+        () => refreshRsvpInfo(),
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [event?.id, user?.id]);
 
