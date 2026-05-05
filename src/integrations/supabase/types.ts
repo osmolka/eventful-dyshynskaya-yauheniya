@@ -176,11 +176,41 @@ export type Database = {
           },
         ]
       }
+      tickets: {
+        Row: {
+          code: string
+          created_at: string
+          id: string
+          rsvp_id: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          id?: string
+          rsvp_id: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          id?: string
+          rsvp_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tickets_rsvp_id_fkey"
+            columns: ["rsvp_id"]
+            isOneToOne: true
+            referencedRelation: "rsvps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      generate_ticket_code: { Args: never; Returns: string }
       promote_waitlist: { Args: { _event_id: string }; Returns: undefined }
     }
     Enums: {

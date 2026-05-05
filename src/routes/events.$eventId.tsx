@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { QRCodeSVG } from "qrcode.react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -33,7 +34,8 @@ function EventDetailPage() {
   const navigate = useNavigate();
   const [event, setEvent] = useState<EventRow | null | undefined>(undefined);
   const [confirmedCount, setConfirmedCount] = useState<number>(0);
-  const [myRsvp, setMyRsvp] = useState<{ status: string } | null>(null);
+  const [myRsvp, setMyRsvp] = useState<{ id: string; status: string } | null>(null);
+  const [myTicket, setMyTicket] = useState<{ code: string; created_at: string } | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -60,13 +62,25 @@ function EventDetailPage() {
     if (user) {
       const { data } = await supabase
         .from("rsvps")
-        .select("status")
+        .select("id, status")
         .eq("event_id", eventId)
         .eq("user_id", user.id)
         .maybeSingle();
       setMyRsvp(data ?? null);
+
+      if (data && data.status === "confirmed") {
+        const { data: ticket } = await supabase
+          .from("tickets")
+          .select("code, created_at")
+          .eq("rsvp_id", data.id)
+          .maybeSingle();
+        setMyTicket(ticket ?? null);
+      } else {
+        setMyTicket(null);
+      }
     } else {
       setMyRsvp(null);
+      setMyTicket(null);
     }
   };
 
@@ -78,6 +92,11 @@ function EventDetailPage() {
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "rsvps", filter: `event_id=eq.${eventId}` },
+        () => refreshRsvpInfo(),
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "tickets" },
         () => refreshRsvpInfo(),
       )
       .subscribe();
@@ -96,14 +115,14 @@ function EventDetailPage() {
     const { data, error } = await supabase
       .from("rsvps")
       .insert({ event_id: eventId, user_id: user.id, status: "confirmed" })
-      .select("status")
+      .select("id, status")
       .single();
     setSubmitting(false);
     if (error) {
       toast.error(error.message);
       return;
     }
-    setMyRsvp({ status: data.status });
+    setMyRsvp({ id: data.id, status: data.status });
     toast.success(data.status === "confirmed" ? "You're confirmed!" : "Added to the waitlist");
     refreshRsvpInfo();
   };
@@ -164,11 +183,26 @@ function EventDetailPage() {
                 : `${confirmedCount} confirmed`}
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="space-y-4">
             {myRsvp ? (
-              <Badge variant={myRsvp.status === "confirmed" ? "default" : "secondary"}>
-                {myRsvp.status === "confirmed" ? "You're going" : "Waitlisted"}
-              </Badge>
+              <>
+                <Badge variant={myRsvp.status === "confirmed" ? "default" : "secondary"}>
+                  {myRsvp.status === "confirmed" ? "You're going" : "Waitlisted"}
+                </Badge>
+                {myRsvp.status === "confirmed" && myTicket && (
+                  <div className="flex flex-col items-center gap-3 rounded-md border bg-background p-4">
+                    <div className="rounded-md bg-white p-3">
+                      <QRCodeSVG value={myTicket.code} size={160} level="M" />
+                    </div>
+                    <div className="text-center">
+                      <p className="font-mono text-sm tracking-widest">{myTicket.code}</p>
+                      <p className="text-xs text-muted-foreground">
+                        Issued {new Date(myTicket.created_at).toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </>
             ) : (
               <Button onClick={handleRsvp} disabled={submitting}>
                 {submitting ? "Submitting..." : isFull ? "Join waitlist" : "RSVP"}
