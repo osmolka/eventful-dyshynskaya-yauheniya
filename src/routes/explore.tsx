@@ -156,7 +156,11 @@ function ExplorePage() {
         ) : (
           <div className="grid gap-4 sm:grid-cols-2">
             {events.map((e) => (
-              <Card key={e.id} className="h-full overflow-hidden">
+              <Card
+                key={e.id}
+                className="h-full cursor-pointer overflow-hidden transition-shadow hover:shadow-md"
+                onClick={() => navigate({ to: "/events/$eventId", params: { eventId: e.id } })}
+              >
                 {e.cover_image_url && (
                   <img
                     src={e.cover_image_url}
