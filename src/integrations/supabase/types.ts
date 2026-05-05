@@ -30,6 +30,7 @@ export type Database = {
           title: string
           updated_at: string
           venue_address: string | null
+          visibility: Database["public"]["Enums"]["event_visibility"]
         }
         Insert: {
           capacity: number
@@ -46,6 +47,7 @@ export type Database = {
           title: string
           updated_at?: string
           venue_address?: string | null
+          visibility?: Database["public"]["Enums"]["event_visibility"]
         }
         Update: {
           capacity?: number
@@ -62,6 +64,7 @@ export type Database = {
           title?: string
           updated_at?: string
           venue_address?: string | null
+          visibility?: Database["public"]["Enums"]["event_visibility"]
         }
         Relationships: [
           {
@@ -148,6 +151,7 @@ export type Database = {
     Enums: {
       app_role: "attendee" | "host" | "checker"
       event_status: "draft" | "published"
+      event_visibility: "public" | "unlisted"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -277,6 +281,7 @@ export const Constants = {
     Enums: {
       app_role: ["attendee", "host", "checker"],
       event_status: ["draft", "published"],
+      event_visibility: ["public", "unlisted"],
     },
   },
 } as const
