@@ -34,7 +34,8 @@ function EventDetailPage() {
   const navigate = useNavigate();
   const [event, setEvent] = useState<EventRow | null | undefined>(undefined);
   const [confirmedCount, setConfirmedCount] = useState<number>(0);
-  const [myRsvp, setMyRsvp] = useState<{ status: string } | null>(null);
+  const [myRsvp, setMyRsvp] = useState<{ id: string; status: string } | null>(null);
+  const [myTicket, setMyTicket] = useState<{ code: string; created_at: string } | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
