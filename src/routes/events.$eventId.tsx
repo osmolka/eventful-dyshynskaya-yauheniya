@@ -110,14 +110,14 @@ function EventDetailPage() {
     const { data, error } = await supabase
       .from("rsvps")
       .insert({ event_id: eventId, user_id: user.id, status: "confirmed" })
-      .select("status")
+      .select("id, status")
       .single();
     setSubmitting(false);
     if (error) {
       toast.error(error.message);
       return;
     }
-    setMyRsvp({ status: data.status });
+    setMyRsvp({ id: data.id, status: data.status });
     toast.success(data.status === "confirmed" ? "You're confirmed!" : "Added to the waitlist");
     refreshRsvpInfo();
   };
