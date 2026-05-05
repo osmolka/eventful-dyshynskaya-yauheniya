@@ -33,6 +33,7 @@ function NewEventPage() {
   const [onlineLink, setOnlineLink] = useState("");
   const [capacity, setCapacity] = useState(50);
   const [coverFile, setCoverFile] = useState<File | null>(null);
+  const [visibility, setVisibility] = useState<"public" | "unlisted">("public");
 
   useEffect(() => {
     if (!user) return;
