@@ -13,8 +13,10 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as HostsHostIdRouteImport } from './routes/hosts.$hostId'
+import { Route as AuthenticatedMyEventsRouteImport } from './routes/_authenticated/my-events'
 import { Route as AuthenticatedBecomeHostRouteImport } from './routes/_authenticated/become-host'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
+import { Route as AuthenticatedEventsNewRouteImport } from './routes/_authenticated/events.new'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -35,6 +37,11 @@ const HostsHostIdRoute = HostsHostIdRouteImport.update({
   path: '/hosts/$hostId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedMyEventsRoute = AuthenticatedMyEventsRouteImport.update({
+  id: '/my-events',
+  path: '/my-events',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedBecomeHostRoute = AuthenticatedBecomeHostRouteImport.update({
   id: '/become-host',
   path: '/become-host',
@@ -45,20 +52,29 @@ const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
   path: '/account',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedEventsNewRoute = AuthenticatedEventsNewRouteImport.update({
+  id: '/events/new',
+  path: '/events/new',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/account': typeof AuthenticatedAccountRoute
   '/become-host': typeof AuthenticatedBecomeHostRoute
+  '/my-events': typeof AuthenticatedMyEventsRoute
   '/hosts/$hostId': typeof HostsHostIdRoute
+  '/events/new': typeof AuthenticatedEventsNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/account': typeof AuthenticatedAccountRoute
   '/become-host': typeof AuthenticatedBecomeHostRoute
+  '/my-events': typeof AuthenticatedMyEventsRoute
   '/hosts/$hostId': typeof HostsHostIdRoute
+  '/events/new': typeof AuthenticatedEventsNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -67,13 +83,29 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/_authenticated/become-host': typeof AuthenticatedBecomeHostRoute
+  '/_authenticated/my-events': typeof AuthenticatedMyEventsRoute
   '/hosts/$hostId': typeof HostsHostIdRoute
+  '/_authenticated/events/new': typeof AuthenticatedEventsNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/account' | '/become-host' | '/hosts/$hostId'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/account'
+    | '/become-host'
+    | '/my-events'
+    | '/hosts/$hostId'
+    | '/events/new'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/account' | '/become-host' | '/hosts/$hostId'
+  to:
+    | '/'
+    | '/auth'
+    | '/account'
+    | '/become-host'
+    | '/my-events'
+    | '/hosts/$hostId'
+    | '/events/new'
   id:
     | '__root__'
     | '/'
@@ -81,7 +113,9 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/account'
     | '/_authenticated/become-host'
+    | '/_authenticated/my-events'
     | '/hosts/$hostId'
+    | '/_authenticated/events/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -121,6 +155,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HostsHostIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/my-events': {
+      id: '/_authenticated/my-events'
+      path: '/my-events'
+      fullPath: '/my-events'
+      preLoaderRoute: typeof AuthenticatedMyEventsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/become-host': {
       id: '/_authenticated/become-host'
       path: '/become-host'
@@ -135,17 +176,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccountRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/events/new': {
+      id: '/_authenticated/events/new'
+      path: '/events/new'
+      fullPath: '/events/new'
+      preLoaderRoute: typeof AuthenticatedEventsNewRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
   AuthenticatedBecomeHostRoute: typeof AuthenticatedBecomeHostRoute
+  AuthenticatedMyEventsRoute: typeof AuthenticatedMyEventsRoute
+  AuthenticatedEventsNewRoute: typeof AuthenticatedEventsNewRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAccountRoute: AuthenticatedAccountRoute,
   AuthenticatedBecomeHostRoute: AuthenticatedBecomeHostRoute,
+  AuthenticatedMyEventsRoute: AuthenticatedMyEventsRoute,
+  AuthenticatedEventsNewRoute: AuthenticatedEventsNewRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
