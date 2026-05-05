@@ -108,15 +108,22 @@ function MyEventsPage() {
                       <Badge variant="outline">{e.visibility}</Badge>
                     </div>
                   </div>
-                  {e.status === "draft" ? (
-                    <Button size="sm" onClick={() => setStatus(e.id, "published")}>
-                      Publish
+                  <div className="flex flex-col gap-2">
+                    {e.status === "draft" ? (
+                      <Button size="sm" onClick={() => setStatus(e.id, "published")}>
+                        Publish
+                      </Button>
+                    ) : (
+                      <Button size="sm" variant="outline" onClick={() => setStatus(e.id, "draft")}>
+                        Unpublish
+                      </Button>
+                    )}
+                    <Button size="sm" variant="secondary" asChild>
+                      <Link to="/events/$eventId/check-in" params={{ eventId: e.id }}>
+                        Check-in
+                      </Link>
                     </Button>
-                  ) : (
-                    <Button size="sm" variant="outline" onClick={() => setStatus(e.id, "draft")}>
-                      Unpublish
-                    </Button>
-                  )}
+                  </div>
                 </CardHeader>
               </Card>
             ))}
