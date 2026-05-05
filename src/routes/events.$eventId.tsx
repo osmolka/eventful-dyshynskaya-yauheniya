@@ -200,6 +200,11 @@ function EventDetailPage() {
                         Issued {new Date(myTicket.created_at).toLocaleString()}
                       </p>
                     </div>
+                    <Button asChild variant="outline" size="sm">
+                      <Link to="/tickets/$ticketId" params={{ ticketId: myTicket.id }}>
+                        View ticket
+                      </Link>
+                    </Button>
                   </div>
                 )}
               </>
