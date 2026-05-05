@@ -158,6 +158,13 @@ function TicketPage() {
               <Button variant="outline" asChild>
                 <Link to="/events/$eventId" params={{ eventId: e.id }}>View event</Link>
               </Button>
+              {new Date(e.end_at) <= new Date() && (
+                <Button variant="outline" asChild>
+                  <Link to="/events/$eventId/feedback" params={{ eventId: e.id }}>
+                    Leave feedback
+                  </Link>
+                </Button>
+              )}
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button variant="destructive" className="ml-auto">Cancel RSVP</Button>
