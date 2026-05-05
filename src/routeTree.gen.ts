@@ -22,6 +22,7 @@ import { Route as AuthenticatedBecomeHostRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as EventsEventIdGalleryRouteImport } from './routes/events.$eventId.gallery'
 import { Route as AuthenticatedTicketsTicketIdRouteImport } from './routes/_authenticated/tickets.$ticketId'
+import { Route as AuthenticatedHostReportsRouteImport } from './routes/_authenticated/host.reports'
 import { Route as AuthenticatedHostMembersRouteImport } from './routes/_authenticated/host.members'
 import { Route as AuthenticatedHostDashboardRouteImport } from './routes/_authenticated/host.dashboard'
 import { Route as AuthenticatedEventsNewRouteImport } from './routes/_authenticated/events.new'
@@ -96,6 +97,12 @@ const AuthenticatedTicketsTicketIdRoute =
     path: '/tickets/$ticketId',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedHostReportsRoute =
+  AuthenticatedHostReportsRouteImport.update({
+    id: '/host/reports',
+    path: '/host/reports',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedHostMembersRoute =
   AuthenticatedHostMembersRouteImport.update({
     id: '/host/members',
@@ -158,6 +165,7 @@ export interface FileRoutesByFullPath {
   '/events/new': typeof AuthenticatedEventsNewRoute
   '/host/dashboard': typeof AuthenticatedHostDashboardRoute
   '/host/members': typeof AuthenticatedHostMembersRoute
+  '/host/reports': typeof AuthenticatedHostReportsRoute
   '/tickets/$ticketId': typeof AuthenticatedTicketsTicketIdRoute
   '/events/$eventId/gallery': typeof EventsEventIdGalleryRoute
   '/events/$eventId/check-in': typeof AuthenticatedEventsEventIdCheckInRoute
@@ -180,6 +188,7 @@ export interface FileRoutesByTo {
   '/events/new': typeof AuthenticatedEventsNewRoute
   '/host/dashboard': typeof AuthenticatedHostDashboardRoute
   '/host/members': typeof AuthenticatedHostMembersRoute
+  '/host/reports': typeof AuthenticatedHostReportsRoute
   '/tickets/$ticketId': typeof AuthenticatedTicketsTicketIdRoute
   '/events/$eventId/gallery': typeof EventsEventIdGalleryRoute
   '/events/$eventId/check-in': typeof AuthenticatedEventsEventIdCheckInRoute
@@ -204,6 +213,7 @@ export interface FileRoutesById {
   '/_authenticated/events/new': typeof AuthenticatedEventsNewRoute
   '/_authenticated/host/dashboard': typeof AuthenticatedHostDashboardRoute
   '/_authenticated/host/members': typeof AuthenticatedHostMembersRoute
+  '/_authenticated/host/reports': typeof AuthenticatedHostReportsRoute
   '/_authenticated/tickets/$ticketId': typeof AuthenticatedTicketsTicketIdRoute
   '/events/$eventId/gallery': typeof EventsEventIdGalleryRoute
   '/_authenticated/events/$eventId/check-in': typeof AuthenticatedEventsEventIdCheckInRoute
@@ -228,6 +238,7 @@ export interface FileRouteTypes {
     | '/events/new'
     | '/host/dashboard'
     | '/host/members'
+    | '/host/reports'
     | '/tickets/$ticketId'
     | '/events/$eventId/gallery'
     | '/events/$eventId/check-in'
@@ -250,6 +261,7 @@ export interface FileRouteTypes {
     | '/events/new'
     | '/host/dashboard'
     | '/host/members'
+    | '/host/reports'
     | '/tickets/$ticketId'
     | '/events/$eventId/gallery'
     | '/events/$eventId/check-in'
@@ -273,6 +285,7 @@ export interface FileRouteTypes {
     | '/_authenticated/events/new'
     | '/_authenticated/host/dashboard'
     | '/_authenticated/host/members'
+    | '/_authenticated/host/reports'
     | '/_authenticated/tickets/$ticketId'
     | '/events/$eventId/gallery'
     | '/_authenticated/events/$eventId/check-in'
@@ -385,6 +398,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTicketsTicketIdRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/host/reports': {
+      id: '/_authenticated/host/reports'
+      path: '/host/reports'
+      fullPath: '/host/reports'
+      preLoaderRoute: typeof AuthenticatedHostReportsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/host/members': {
       id: '/_authenticated/host/members'
       path: '/host/members'
@@ -452,6 +472,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedEventsNewRoute: typeof AuthenticatedEventsNewRoute
   AuthenticatedHostDashboardRoute: typeof AuthenticatedHostDashboardRoute
   AuthenticatedHostMembersRoute: typeof AuthenticatedHostMembersRoute
+  AuthenticatedHostReportsRoute: typeof AuthenticatedHostReportsRoute
   AuthenticatedTicketsTicketIdRoute: typeof AuthenticatedTicketsTicketIdRoute
   AuthenticatedEventsEventIdCheckInRoute: typeof AuthenticatedEventsEventIdCheckInRoute
   AuthenticatedEventsEventIdExportRoute: typeof AuthenticatedEventsEventIdExportRoute
@@ -468,6 +489,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedEventsNewRoute: AuthenticatedEventsNewRoute,
   AuthenticatedHostDashboardRoute: AuthenticatedHostDashboardRoute,
   AuthenticatedHostMembersRoute: AuthenticatedHostMembersRoute,
+  AuthenticatedHostReportsRoute: AuthenticatedHostReportsRoute,
   AuthenticatedTicketsTicketIdRoute: AuthenticatedTicketsTicketIdRoute,
   AuthenticatedEventsEventIdCheckInRoute:
     AuthenticatedEventsEventIdCheckInRoute,
