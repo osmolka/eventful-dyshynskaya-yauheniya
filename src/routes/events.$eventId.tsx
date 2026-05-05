@@ -137,6 +137,7 @@ function EventDetailPage() {
 
   const seatsLeft = Math.max(0, event.capacity - confirmedCount);
   const isFull = event.capacity > 0 && seatsLeft === 0;
+  const hasEnded = new Date(event.end_at) <= new Date();
 
   return (
     <div className="min-h-screen bg-background px-4 py-10">
@@ -149,7 +150,10 @@ function EventDetailPage() {
           />
         )}
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">{event.title}</h1>
+          <div className="flex flex-wrap items-center gap-2">
+            <h1 className="text-3xl font-bold tracking-tight">{event.title}</h1>
+            {hasEnded && <Badge variant="secondary">Ended</Badge>}
+          </div>
           <p className="text-sm text-muted-foreground">
             {new Date(event.start_at).toLocaleString()} – {new Date(event.end_at).toLocaleString()} ({event.time_zone})
           </p>
@@ -218,6 +222,8 @@ function EventDetailPage() {
                   </div>
                 )}
               </>
+            ) : hasEnded ? (
+              <p className="text-sm text-muted-foreground">This event has ended.</p>
             ) : (
               <Button onClick={handleRsvp} disabled={submitting}>
                 {submitting ? "Submitting..." : isFull ? "Join waitlist" : "RSVP"}
