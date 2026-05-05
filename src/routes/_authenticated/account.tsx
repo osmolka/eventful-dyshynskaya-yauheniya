@@ -48,9 +48,14 @@ function AccountPage() {
             </Button>
           )}
           {hostId && (
-            <Button asChild variant="secondary" className="w-full">
-              <Link to="/hosts/$hostId" params={{ hostId }}>View my Host page</Link>
-            </Button>
+            <>
+              <Button asChild variant="secondary" className="w-full">
+                <Link to="/hosts/$hostId" params={{ hostId }}>View my Host page</Link>
+              </Button>
+              <Button asChild className="w-full">
+                <Link to="/my-events">My events</Link>
+              </Button>
+            </>
           )}
           <Button variant="outline" className="w-full" onClick={() => signOut()}>
             Sign out
