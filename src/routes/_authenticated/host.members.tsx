@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { BackButton } from "@/components/BackButton";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -142,6 +143,7 @@ function HostMembersPage() {
   return (
     <div className="min-h-screen bg-background px-4 py-10">
       <div className="mx-auto max-w-3xl space-y-6">
+        <BackButton />
         <header>
           <h1 className="text-3xl font-bold tracking-tight">Host members</h1>
           <p className="text-sm text-muted-foreground">

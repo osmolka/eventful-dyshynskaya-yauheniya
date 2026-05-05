@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import { BackButton } from "@/components/BackButton";
 
 export const Route = createFileRoute("/invites/$token")({
   component: AcceptInvitePage,
@@ -42,7 +43,9 @@ function AcceptInvitePage() {
 
   return (
     <div className="min-h-screen bg-background p-10">
-      <Card className="mx-auto max-w-md">
+      <div className="mx-auto max-w-md space-y-3">
+        <BackButton />
+      <Card>
         <CardHeader>
           <CardTitle>Host invite</CardTitle>
           <CardDescription>
@@ -61,6 +64,7 @@ function AcceptInvitePage() {
           )}
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }

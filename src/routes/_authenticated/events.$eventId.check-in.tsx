@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
+import { BackButton } from "@/components/BackButton";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -198,6 +199,7 @@ function CheckInPage() {
   return (
     <div className="min-h-screen bg-background px-4 py-10">
       <div className="mx-auto max-w-xl space-y-6">
+        <BackButton />
         <header>
           <p className="text-sm text-muted-foreground">Check-in</p>
           <h1 className="text-3xl font-bold tracking-tight">{event?.title ?? "Event"}</h1>

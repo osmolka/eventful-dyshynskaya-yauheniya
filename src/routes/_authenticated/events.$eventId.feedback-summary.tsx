@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { BackButton } from "@/components/BackButton";
 import { useAuth } from "@/contexts/AuthContext";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -88,6 +89,7 @@ function SummaryPage() {
   return (
     <div className="min-h-screen bg-background px-4 py-10">
       <div className="mx-auto max-w-2xl space-y-6">
+        <BackButton />
         <header>
           <p className="text-sm text-muted-foreground">Feedback</p>
           <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
