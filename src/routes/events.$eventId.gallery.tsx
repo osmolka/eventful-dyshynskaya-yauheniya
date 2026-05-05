@@ -166,7 +166,12 @@ function GalleryPage() {
                     className="aspect-square w-full rounded-md object-cover"
                     loading="lazy"
                   />
-                  {p.caption && <figcaption className="text-xs text-muted-foreground">{p.caption}</figcaption>}
+                  <div className="flex items-center justify-between gap-2">
+                    {p.caption ? (
+                      <figcaption className="truncate text-xs text-muted-foreground">{p.caption}</figcaption>
+                    ) : <span />}
+                    {user && <ReportButton targetType="photo" targetId={p.id} />}
+                  </div>
                 </figure>
               ))}
             </div>
