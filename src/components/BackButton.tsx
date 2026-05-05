@@ -19,7 +19,7 @@ export function BackButton({ label = "Back", className }: BackButtonProps) {
   };
 
   return (
-    <Button variant="ghost" size="sm" onClick={handleBack} className={className}>
+    <Button variant="outline" size="sm" onClick={handleBack} className={className}>
       <ArrowLeft className="mr-1 h-4 w-4" />
       {label}
     </Button>

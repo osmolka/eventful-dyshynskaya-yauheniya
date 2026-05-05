@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { BackButton } from "@/components/BackButton";
 import { toast } from "sonner";
 
 interface EventRow {
@@ -66,6 +67,7 @@ function MyEventsPage() {
   return (
     <div className="min-h-screen bg-background px-4 py-10">
       <div className="mx-auto max-w-2xl space-y-6">
+        <BackButton />
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold tracking-tight">My events</h1>
           {isHost && (
