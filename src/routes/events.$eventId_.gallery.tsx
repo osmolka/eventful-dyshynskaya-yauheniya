@@ -9,7 +9,7 @@ import { ReportButton } from "@/components/ReportButton";
 import { toast } from "sonner";
 import { PageLoader } from "@/components/Spinner";
 
-export const Route = createFileRoute("/events/$eventId/gallery")({
+export const Route = createFileRoute("/events/$eventId_/gallery")({
   component: GalleryPage,
 });
 
