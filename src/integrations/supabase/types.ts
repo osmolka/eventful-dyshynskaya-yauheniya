@@ -14,6 +14,65 @@ export type Database = {
   }
   public: {
     Tables: {
+      events: {
+        Row: {
+          capacity: number
+          cover_image_url: string | null
+          created_at: string
+          description: string | null
+          end_at: string
+          host_id: string
+          id: string
+          online_link: string | null
+          start_at: string
+          status: Database["public"]["Enums"]["event_status"]
+          time_zone: string
+          title: string
+          updated_at: string
+          venue_address: string | null
+        }
+        Insert: {
+          capacity: number
+          cover_image_url?: string | null
+          created_at?: string
+          description?: string | null
+          end_at: string
+          host_id: string
+          id?: string
+          online_link?: string | null
+          start_at: string
+          status?: Database["public"]["Enums"]["event_status"]
+          time_zone: string
+          title: string
+          updated_at?: string
+          venue_address?: string | null
+        }
+        Update: {
+          capacity?: number
+          cover_image_url?: string | null
+          created_at?: string
+          description?: string | null
+          end_at?: string
+          host_id?: string
+          id?: string
+          online_link?: string | null
+          start_at?: string
+          status?: Database["public"]["Enums"]["event_status"]
+          time_zone?: string
+          title?: string
+          updated_at?: string
+          venue_address?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "events_host_id_fkey"
+            columns: ["host_id"]
+            isOneToOne: false
+            referencedRelation: "hosts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       hosts: {
         Row: {
           bio: string | null
@@ -88,6 +147,7 @@ export type Database = {
     }
     Enums: {
       app_role: "attendee" | "host" | "checker"
+      event_status: "draft" | "published"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -216,6 +276,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["attendee", "host", "checker"],
+      event_status: ["draft", "published"],
     },
   },
 } as const
