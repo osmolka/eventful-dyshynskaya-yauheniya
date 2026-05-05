@@ -43,7 +43,9 @@ function AcceptInvitePage() {
 
   return (
     <div className="min-h-screen bg-background p-10">
-      <Card className="mx-auto max-w-md">
+      <div className="mx-auto max-w-md space-y-3">
+        <BackButton />
+      <Card>
         <CardHeader>
           <CardTitle>Host invite</CardTitle>
           <CardDescription>
