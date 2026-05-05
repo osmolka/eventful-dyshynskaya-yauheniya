@@ -137,6 +137,7 @@ function EventDetailPage() {
 
   const seatsLeft = Math.max(0, event.capacity - confirmedCount);
   const isFull = event.capacity > 0 && seatsLeft === 0;
+  const hasEnded = new Date(event.end_at) <= new Date();
 
   return (
     <div className="min-h-screen bg-background px-4 py-10">
