@@ -32,14 +32,18 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Eventful" },
+      { name: "description", content: "Event hosting and attendance platform — a tool for running free community-style events end to end. It lets organizers publish an event page and share it publicl" },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Eventful" },
+      { property: "og:description", content: "Event hosting and attendance platform — a tool for running free community-style events end to end. It lets organizers publish an event page and share it publicl" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Eventful" },
+      { name: "twitter:description", content: "Event hosting and attendance platform — a tool for running free community-style events end to end. It lets organizers publish an event page and share it publicl" },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/cbdeec87-4473-4bb0-adf4-1c80d99ec8c7/id-preview-979b7597--433224d8-bdf9-482a-bb7c-05a749fc5610.lovable.app-1777987965891.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/cbdeec87-4473-4bb0-adf4-1c80d99ec8c7/id-preview-979b7597--433224d8-bdf9-482a-bb7c-05a749fc5610.lovable.app-1777987965891.png" },
     ],
     links: [
       {
