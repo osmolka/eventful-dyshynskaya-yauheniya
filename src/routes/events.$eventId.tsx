@@ -6,6 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ReportButton } from "@/components/ReportButton";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/events/$eventId")({
@@ -163,12 +164,13 @@ function EventDetailPage() {
           </p>
         </div>
 
-        <div>
+        <div className="flex gap-2">
           <Button asChild variant="outline" size="sm">
             <Link to="/events/$eventId/gallery" params={{ eventId }}>
               View photo gallery
             </Link>
           </Button>
+          <ReportButton targetType="event" targetId={eventId} variant="outline" />
         </div>
 
         {event.description && (

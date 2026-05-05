@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { ReportButton } from "@/components/ReportButton";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/events/$eventId/gallery")({
@@ -165,7 +166,12 @@ function GalleryPage() {
                     className="aspect-square w-full rounded-md object-cover"
                     loading="lazy"
                   />
-                  {p.caption && <figcaption className="text-xs text-muted-foreground">{p.caption}</figcaption>}
+                  <div className="flex items-center justify-between gap-2">
+                    {p.caption ? (
+                      <figcaption className="truncate text-xs text-muted-foreground">{p.caption}</figcaption>
+                    ) : <span />}
+                    {user && <ReportButton targetType="photo" targetId={p.id} />}
+                  </div>
                 </figure>
               ))}
             </div>
