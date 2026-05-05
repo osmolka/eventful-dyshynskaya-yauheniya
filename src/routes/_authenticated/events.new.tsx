@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/events/new")({
@@ -194,6 +195,27 @@ function NewEventPage() {
                   required
                 />
               </Field>
+
+              <div className="space-y-3">
+                <Label>Pricing</Label>
+                <TooltipProvider>
+                  <RadioGroup value="free" className="flex gap-4">
+                    <div className="flex items-center gap-2">
+                      <RadioGroupItem value="free" id="price-free" />
+                      <Label htmlFor="price-free" className="font-normal">Free</Label>
+                    </div>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="flex cursor-not-allowed items-center gap-2 opacity-50">
+                          <RadioGroupItem value="paid" id="price-paid" disabled />
+                          <Label htmlFor="price-paid" className="font-normal">Paid</Label>
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent>Coming soon</TooltipContent>
+                    </Tooltip>
+                  </RadioGroup>
+                </TooltipProvider>
+              </div>
 
               <Field label="Cover image">
                 <Input type="file" accept="image/*" onChange={(e) => setCoverFile(e.target.files?.[0] ?? null)} />
