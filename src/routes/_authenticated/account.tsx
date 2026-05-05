@@ -53,6 +53,9 @@ function AccountPage() {
                 <Link to="/hosts/$hostId" params={{ hostId }}>View my Host page</Link>
               </Button>
               <Button asChild className="w-full">
+                <Link to="/host/dashboard">Host dashboard</Link>
+              </Button>
+              <Button asChild variant="secondary" className="w-full">
                 <Link to="/my-events">My events</Link>
               </Button>
               <Button asChild variant="secondary" className="w-full">
