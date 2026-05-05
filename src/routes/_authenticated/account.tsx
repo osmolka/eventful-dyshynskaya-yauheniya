@@ -12,15 +12,18 @@ export const Route = createFileRoute("/_authenticated/account")({
 function AccountPage() {
   const { user, signOut } = useAuth();
   const [role, setRole] = useState<string | null>(null);
+  const [hostId, setHostId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!user) return;
-    supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", user.id)
-      .maybeSingle()
-      .then(({ data }) => setRole(data?.role ?? null));
+    (async () => {
+      const [{ data: profile }, { data: host }] = await Promise.all([
+        supabase.from("profiles").select("role").eq("id", user.id).maybeSingle(),
+        supabase.from("hosts").select("id").eq("profile_id", user.id).maybeSingle(),
+      ]);
+      setRole(profile?.role ?? null);
+      setHostId(host?.id ?? null);
+    })();
   }, [user]);
 
   return (
@@ -42,6 +45,11 @@ function AccountPage() {
           {role === "attendee" && (
             <Button asChild className="w-full">
               <Link to="/become-host">Become a Host</Link>
+            </Button>
+          )}
+          {hostId && (
+            <Button asChild variant="secondary" className="w-full">
+              <Link to="/hosts/$hostId" params={{ hostId }}>View my Host page</Link>
             </Button>
           )}
           <Button variant="outline" className="w-full" onClick={() => signOut()}>
