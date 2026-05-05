@@ -417,6 +417,14 @@ export type Database = {
         }[]
       }
       generate_ticket_code: { Args: never; Returns: string }
+      get_event_counts: {
+        Args: { _event_id: string }
+        Returns: {
+          checked_in_count: number
+          confirmed_count: number
+          waitlist_count: number
+        }[]
+      }
       is_host_owner: { Args: { _host_id: string }; Returns: boolean }
       is_host_role: { Args: { _host_id: string }; Returns: boolean }
       is_report_host: {

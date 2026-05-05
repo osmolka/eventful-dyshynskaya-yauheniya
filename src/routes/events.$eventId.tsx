@@ -55,12 +55,9 @@ function EventDetailPage() {
   }, [eventId]);
 
   const refreshRsvpInfo = async () => {
-    const { count } = await supabase
-      .from("rsvps")
-      .select("id", { count: "exact", head: true })
-      .eq("event_id", eventId)
-      .eq("status", "confirmed");
-    setConfirmedCount(count ?? 0);
+    const { data: counts } = await supabase.rpc("get_event_counts", { _event_id: eventId });
+    const row = Array.isArray(counts) ? counts[0] : counts;
+    setConfirmedCount(row?.confirmed_count ?? 0);
 
     if (user) {
       const { data } = await supabase
