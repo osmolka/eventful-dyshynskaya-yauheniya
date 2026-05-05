@@ -71,7 +71,7 @@ function EventDetailPage() {
       if (data && data.status === "confirmed") {
         const { data: ticket } = await supabase
           .from("tickets")
-          .select("code, created_at")
+          .select("id, code, created_at")
           .eq("rsvp_id", data.id)
           .maybeSingle();
         setMyTicket(ticket ?? null);
