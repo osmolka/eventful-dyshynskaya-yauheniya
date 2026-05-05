@@ -78,6 +78,7 @@ function NewEventPage() {
           online_link: locationKind === "online" ? onlineLink : null,
           capacity,
           cover_image_url: coverUrl,
+          visibility,
         })
         .select("id")
         .single();
