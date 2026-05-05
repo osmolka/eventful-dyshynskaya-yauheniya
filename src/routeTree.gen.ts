@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
@@ -18,6 +19,11 @@ import { Route as AuthenticatedBecomeHostRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedEventsNewRouteImport } from './routes/_authenticated/events.new'
 
+const ExploreRoute = ExploreRouteImport.update({
+  id: '/explore',
+  path: '/explore',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -61,6 +67,7 @@ const AuthenticatedEventsNewRoute = AuthenticatedEventsNewRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/explore': typeof ExploreRoute
   '/account': typeof AuthenticatedAccountRoute
   '/become-host': typeof AuthenticatedBecomeHostRoute
   '/my-events': typeof AuthenticatedMyEventsRoute
@@ -70,6 +77,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/explore': typeof ExploreRoute
   '/account': typeof AuthenticatedAccountRoute
   '/become-host': typeof AuthenticatedBecomeHostRoute
   '/my-events': typeof AuthenticatedMyEventsRoute
@@ -81,6 +89,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/auth': typeof AuthRoute
+  '/explore': typeof ExploreRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/_authenticated/become-host': typeof AuthenticatedBecomeHostRoute
   '/_authenticated/my-events': typeof AuthenticatedMyEventsRoute
@@ -92,6 +101,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/explore'
     | '/account'
     | '/become-host'
     | '/my-events'
@@ -101,6 +111,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/explore'
     | '/account'
     | '/become-host'
     | '/my-events'
@@ -111,6 +122,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/explore'
     | '/_authenticated/account'
     | '/_authenticated/become-host'
     | '/_authenticated/my-events'
@@ -122,11 +134,19 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ExploreRoute: typeof ExploreRoute
   HostsHostIdRoute: typeof HostsHostIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/explore': {
+      id: '/explore'
+      path: '/explore'
+      fullPath: '/explore'
+      preLoaderRoute: typeof ExploreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -208,6 +228,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AuthRoute: AuthRoute,
+  ExploreRoute: ExploreRoute,
   HostsHostIdRoute: HostsHostIdRoute,
 }
 export const routeTree = rootRouteImport
