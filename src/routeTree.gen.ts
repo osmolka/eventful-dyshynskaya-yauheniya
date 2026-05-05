@@ -20,7 +20,7 @@ import { Route as AuthenticatedMyTicketsRouteImport } from './routes/_authentica
 import { Route as AuthenticatedMyEventsRouteImport } from './routes/_authenticated/my-events'
 import { Route as AuthenticatedBecomeHostRouteImport } from './routes/_authenticated/become-host'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
-import { Route as EventsEventIdGalleryRouteImport } from './routes/events.$eventId.gallery'
+import { Route as EventsEventIdGalleryRouteImport } from './routes/events.$eventId_.gallery'
 import { Route as AuthenticatedTicketsTicketIdRouteImport } from './routes/_authenticated/tickets.$ticketId'
 import { Route as AuthenticatedHostReportsRouteImport } from './routes/_authenticated/host.reports'
 import { Route as AuthenticatedHostMembersRouteImport } from './routes/_authenticated/host.members'
@@ -87,9 +87,9 @@ const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const EventsEventIdGalleryRoute = EventsEventIdGalleryRouteImport.update({
-  id: '/gallery',
-  path: '/gallery',
-  getParentRoute: () => EventsEventIdRoute,
+  id: '/events/$eventId_/gallery',
+  path: '/events/$eventId/gallery',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedTicketsTicketIdRoute =
   AuthenticatedTicketsTicketIdRouteImport.update({
@@ -159,7 +159,7 @@ export interface FileRoutesByFullPath {
   '/become-host': typeof AuthenticatedBecomeHostRoute
   '/my-events': typeof AuthenticatedMyEventsRoute
   '/my-tickets': typeof AuthenticatedMyTicketsRoute
-  '/events/$eventId': typeof EventsEventIdRouteWithChildren
+  '/events/$eventId': typeof EventsEventIdRoute
   '/hosts/$hostId': typeof HostsHostIdRoute
   '/invites/$token': typeof InvitesTokenRoute
   '/events/new': typeof AuthenticatedEventsNewRoute
@@ -182,7 +182,7 @@ export interface FileRoutesByTo {
   '/become-host': typeof AuthenticatedBecomeHostRoute
   '/my-events': typeof AuthenticatedMyEventsRoute
   '/my-tickets': typeof AuthenticatedMyTicketsRoute
-  '/events/$eventId': typeof EventsEventIdRouteWithChildren
+  '/events/$eventId': typeof EventsEventIdRoute
   '/hosts/$hostId': typeof HostsHostIdRoute
   '/invites/$token': typeof InvitesTokenRoute
   '/events/new': typeof AuthenticatedEventsNewRoute
@@ -207,7 +207,7 @@ export interface FileRoutesById {
   '/_authenticated/become-host': typeof AuthenticatedBecomeHostRoute
   '/_authenticated/my-events': typeof AuthenticatedMyEventsRoute
   '/_authenticated/my-tickets': typeof AuthenticatedMyTicketsRoute
-  '/events/$eventId': typeof EventsEventIdRouteWithChildren
+  '/events/$eventId': typeof EventsEventIdRoute
   '/hosts/$hostId': typeof HostsHostIdRoute
   '/invites/$token': typeof InvitesTokenRoute
   '/_authenticated/events/new': typeof AuthenticatedEventsNewRoute
@@ -215,7 +215,7 @@ export interface FileRoutesById {
   '/_authenticated/host/members': typeof AuthenticatedHostMembersRoute
   '/_authenticated/host/reports': typeof AuthenticatedHostReportsRoute
   '/_authenticated/tickets/$ticketId': typeof AuthenticatedTicketsTicketIdRoute
-  '/events/$eventId/gallery': typeof EventsEventIdGalleryRoute
+  '/events/$eventId_/gallery': typeof EventsEventIdGalleryRoute
   '/_authenticated/events/$eventId/check-in': typeof AuthenticatedEventsEventIdCheckInRoute
   '/_authenticated/events/$eventId/export': typeof AuthenticatedEventsEventIdExportRoute
   '/_authenticated/events/$eventId/feedback': typeof AuthenticatedEventsEventIdFeedbackRoute
@@ -287,7 +287,7 @@ export interface FileRouteTypes {
     | '/_authenticated/host/members'
     | '/_authenticated/host/reports'
     | '/_authenticated/tickets/$ticketId'
-    | '/events/$eventId/gallery'
+    | '/events/$eventId_/gallery'
     | '/_authenticated/events/$eventId/check-in'
     | '/_authenticated/events/$eventId/export'
     | '/_authenticated/events/$eventId/feedback'
@@ -300,9 +300,10 @@ export interface RootRouteChildren {
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AuthRoute: typeof AuthRoute
   ExploreRoute: typeof ExploreRoute
-  EventsEventIdRoute: typeof EventsEventIdRouteWithChildren
+  EventsEventIdRoute: typeof EventsEventIdRoute
   HostsHostIdRoute: typeof HostsHostIdRoute
   InvitesTokenRoute: typeof InvitesTokenRoute
+  EventsEventIdGalleryRoute: typeof EventsEventIdGalleryRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -384,12 +385,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccountRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
-    '/events/$eventId/gallery': {
-      id: '/events/$eventId/gallery'
-      path: '/gallery'
+    '/events/$eventId_/gallery': {
+      id: '/events/$eventId_/gallery'
+      path: '/events/$eventId/gallery'
       fullPath: '/events/$eventId/gallery'
       preLoaderRoute: typeof EventsEventIdGalleryRouteImport
-      parentRoute: typeof EventsEventIdRoute
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/tickets/$ticketId': {
       id: '/_authenticated/tickets/$ticketId'
@@ -505,26 +506,15 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
   AuthenticatedRouteChildren,
 )
 
-interface EventsEventIdRouteChildren {
-  EventsEventIdGalleryRoute: typeof EventsEventIdGalleryRoute
-}
-
-const EventsEventIdRouteChildren: EventsEventIdRouteChildren = {
-  EventsEventIdGalleryRoute: EventsEventIdGalleryRoute,
-}
-
-const EventsEventIdRouteWithChildren = EventsEventIdRoute._addFileChildren(
-  EventsEventIdRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AuthRoute: AuthRoute,
   ExploreRoute: ExploreRoute,
-  EventsEventIdRoute: EventsEventIdRouteWithChildren,
+  EventsEventIdRoute: EventsEventIdRoute,
   HostsHostIdRoute: HostsHostIdRoute,
   InvitesTokenRoute: InvitesTokenRoute,
+  EventsEventIdGalleryRoute: EventsEventIdGalleryRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
