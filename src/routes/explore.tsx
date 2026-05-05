@@ -154,33 +154,26 @@ function ExplorePage() {
         ) : (
           <div className="grid gap-4 sm:grid-cols-2">
             {events.map((e) => (
-              <Link
-                key={e.id}
-                to="/events/$eventId"
-                params={{ eventId: e.id }}
-                className="group"
-              >
-                <Card className="h-full overflow-hidden transition-colors group-hover:border-primary">
-                  {e.cover_image_url && (
-                    <img
-                      src={e.cover_image_url}
-                      alt=""
-                      className="aspect-video w-full object-cover"
-                    />
-                  )}
-                  <CardHeader>
-                    <CardTitle className="text-lg">{e.title}</CardTitle>
-                    <CardDescription>
-                      {new Date(e.start_at).toLocaleString()} · {e.online_link ? "Online" : e.venue_address}
-                    </CardDescription>
-                  </CardHeader>
-                  {e.description && (
-                    <CardContent>
-                      <p className="line-clamp-2 text-sm text-muted-foreground">{e.description}</p>
-                    </CardContent>
-                  )}
-                </Card>
-              </Link>
+              <Card key={e.id} className="h-full overflow-hidden">
+                {e.cover_image_url && (
+                  <img
+                    src={e.cover_image_url}
+                    alt=""
+                    className="aspect-video w-full object-cover"
+                  />
+                )}
+                <CardHeader>
+                  <CardTitle className="text-lg">{e.title}</CardTitle>
+                  <CardDescription>
+                    {new Date(e.start_at).toLocaleString()} · {e.online_link ? "Online" : e.venue_address}
+                  </CardDescription>
+                </CardHeader>
+                {e.description && (
+                  <CardContent>
+                    <p className="line-clamp-2 text-sm text-muted-foreground">{e.description}</p>
+                  </CardContent>
+                )}
+              </Card>
             ))}
           </div>
         )}
