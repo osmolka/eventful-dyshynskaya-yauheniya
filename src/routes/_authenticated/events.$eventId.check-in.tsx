@@ -241,6 +241,19 @@ function CheckInPage() {
               <Button type="submit" className="w-full" disabled={submitting}>
                 {submitting ? "Checking..." : "Check in"}
               </Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                onClick={handleUndo}
+                disabled={!lastCheckIn || undoing}
+              >
+                {undoing
+                  ? "Undoing..."
+                  : lastCheckIn
+                    ? `Undo last check-in (${lastCheckIn.code})`
+                    : "Undo last check-in"}
+              </Button>
               {lastResult && (
                 <p className="text-sm text-muted-foreground">{lastResult}</p>
               )}
