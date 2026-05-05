@@ -35,6 +35,8 @@ function CheckInPage() {
   const [code, setCode] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [lastResult, setLastResult] = useState<string | null>(null);
+  const [lastCheckIn, setLastCheckIn] = useState<{ ticketId: string; code: string } | null>(null);
+  const [undoing, setUndoing] = useState(false);
 
   useEffect(() => {
     if (loading || !user) return;
@@ -158,7 +160,27 @@ function CheckInPage() {
     }
     toast.success(`Checked in: ${normalized}`);
     setLastResult(`✓ Checked in: ${normalized}`);
+    setLastCheckIn({ ticketId: ticket.id, code: normalized });
     setCode("");
+    refreshCounts();
+  };
+
+  const handleUndo = async () => {
+    if (!lastCheckIn) return;
+    setUndoing(true);
+    const { error } = await supabase
+      .from("tickets")
+      .update({ checked_in_at: null, checked_in_by: null })
+      .eq("id", lastCheckIn.ticketId)
+      .not("checked_in_at", "is", null);
+    setUndoing(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success(`Undid check-in: ${lastCheckIn.code}`);
+    setLastResult(`Undid check-in: ${lastCheckIn.code}`);
+    setLastCheckIn(null);
     refreshCounts();
   };
 
@@ -218,6 +240,19 @@ function CheckInPage() {
               </div>
               <Button type="submit" className="w-full" disabled={submitting}>
                 {submitting ? "Checking..." : "Check in"}
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                onClick={handleUndo}
+                disabled={!lastCheckIn || undoing}
+              >
+                {undoing
+                  ? "Undoing..."
+                  : lastCheckIn
+                    ? `Undo last check-in (${lastCheckIn.code})`
+                    : "Undo last check-in"}
               </Button>
               {lastResult && (
                 <p className="text-sm text-muted-foreground">{lastResult}</p>
