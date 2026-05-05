@@ -22,7 +22,7 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const { user, loading, signIn, signUp } = useAuth();
-  const { redirect } = Route.useSearch();
+  const { redirect, mode } = Route.useSearch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
