@@ -18,6 +18,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
+import { PageLoader } from "@/components/Spinner";
 
 export const Route = createFileRoute("/_authenticated/tickets/$ticketId")({
   component: TicketPage,
@@ -115,7 +116,7 @@ function TicketPage() {
   };
 
   if (authLoading || ticket === undefined) {
-    return <div className="p-10 text-sm text-muted-foreground">Loading...</div>;
+    return <PageLoader />;
   }
   if (ticket === null || ticket.rsvp.user_id !== user?.id) {
     return <div className="p-10 text-sm text-muted-foreground">Ticket not found.</div>;
