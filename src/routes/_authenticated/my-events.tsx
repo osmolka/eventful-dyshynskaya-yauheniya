@@ -1,16 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
 
 interface EventRow {
   id: string;
   title: string;
   start_at: string;
   status: "draft" | "published";
+  visibility: "public" | "unlisted";
 }
 
 export const Route = createFileRoute("/_authenticated/my-events")({
@@ -20,7 +22,17 @@ export const Route = createFileRoute("/_authenticated/my-events")({
 function MyEventsPage() {
   const { user } = useAuth();
   const [events, setEvents] = useState<EventRow[] | null>(null);
+  const [hostId, setHostId] = useState<string | null>(null);
   const [isHost, setIsHost] = useState(false);
+
+  const load = useCallback(async (hid: string) => {
+    const { data } = await supabase
+      .from("events")
+      .select("id, title, start_at, status, visibility")
+      .eq("host_id", hid)
+      .order("start_at", { ascending: false });
+    setEvents(data ?? []);
+  }, []);
 
   useEffect(() => {
     if (!user) return;
@@ -36,14 +48,20 @@ function MyEventsPage() {
         return;
       }
       setIsHost(true);
-      const { data } = await supabase
-        .from("events")
-        .select("id, title, start_at, status")
-        .eq("host_id", host.id)
-        .order("start_at", { ascending: false });
-      setEvents(data ?? []);
+      setHostId(host.id);
+      await load(host.id);
     })();
-  }, [user]);
+  }, [user, load]);
+
+  const setStatus = async (id: string, status: "draft" | "published") => {
+    const { error } = await supabase.from("events").update({ status }).eq("id", id);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success(status === "published" ? "Event published" : "Event unpublished");
+    if (hostId) await load(hostId);
+  };
 
   return (
     <div className="min-h-screen bg-background px-4 py-10">
@@ -77,16 +95,28 @@ function MyEventsPage() {
           <div className="space-y-3">
             {events.map((e) => (
               <Card key={e.id}>
-                <CardHeader className="flex-row items-center justify-between space-y-0">
-                  <div>
+                <CardHeader className="flex-row items-center justify-between space-y-0 gap-4">
+                  <div className="min-w-0">
                     <CardTitle className="text-base">{e.title}</CardTitle>
                     <CardDescription>
                       {new Date(e.start_at).toLocaleString()}
                     </CardDescription>
+                    <div className="mt-2 flex gap-2">
+                      <Badge variant={e.status === "published" ? "default" : "secondary"}>
+                        {e.status}
+                      </Badge>
+                      <Badge variant="outline">{e.visibility}</Badge>
+                    </div>
                   </div>
-                  <Badge variant={e.status === "published" ? "default" : "secondary"}>
-                    {e.status}
-                  </Badge>
+                  {e.status === "draft" ? (
+                    <Button size="sm" onClick={() => setStatus(e.id, "published")}>
+                      Publish
+                    </Button>
+                  ) : (
+                    <Button size="sm" variant="outline" onClick={() => setStatus(e.id, "draft")}>
+                      Unpublish
+                    </Button>
+                  )}
                 </CardHeader>
               </Card>
             ))}
