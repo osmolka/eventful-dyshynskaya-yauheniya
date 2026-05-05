@@ -62,13 +62,25 @@ function EventDetailPage() {
     if (user) {
       const { data } = await supabase
         .from("rsvps")
-        .select("status")
+        .select("id, status")
         .eq("event_id", eventId)
         .eq("user_id", user.id)
         .maybeSingle();
       setMyRsvp(data ?? null);
+
+      if (data && data.status === "confirmed") {
+        const { data: ticket } = await supabase
+          .from("tickets")
+          .select("code, created_at")
+          .eq("rsvp_id", data.id)
+          .maybeSingle();
+        setMyTicket(ticket ?? null);
+      } else {
+        setMyTicket(null);
+      }
     } else {
       setMyRsvp(null);
+      setMyTicket(null);
     }
   };
 
