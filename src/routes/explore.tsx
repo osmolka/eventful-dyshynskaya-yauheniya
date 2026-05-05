@@ -52,7 +52,7 @@ function ExplorePage() {
   useEffect(() => setQInput(q), [q]);
   useEffect(() => {
     const t = setTimeout(() => {
-      if (qInput !== q) navigate({ search: (p) => ({ ...p, q: qInput }) });
+      if (qInput !== q) navigate({ search: (p: ExploreSearch) => ({ ...p, q: qInput }) });
     }, 300);
     return () => clearTimeout(t);
   }, [qInput, q, navigate]);
@@ -109,7 +109,7 @@ function ExplorePage() {
               id="from"
               type="date"
               value={from}
-              onChange={(e) => navigate({ search: (p) => ({ ...p, from: e.target.value }) })}
+              onChange={(e) => navigate({ search: (p: ExploreSearch) => ({ ...p, from: e.target.value }) })}
             />
           </div>
           <div className="space-y-2">
@@ -118,7 +118,7 @@ function ExplorePage() {
               id="to"
               type="date"
               value={to}
-              onChange={(e) => navigate({ search: (p) => ({ ...p, to: e.target.value }) })}
+              onChange={(e) => navigate({ search: (p: ExploreSearch) => ({ ...p, to: e.target.value }) })}
             />
           </div>
           <div className="space-y-2">
@@ -126,7 +126,7 @@ function ExplorePage() {
             <Select
               value={location}
               onValueChange={(v) =>
-                navigate({ search: (p) => ({ ...p, location: v as "any" | "venue" | "online" }) })
+                navigate({ search: (p: ExploreSearch) => ({ ...p, location: v as "any" | "venue" | "online" }) })
               }
             >
               <SelectTrigger>
@@ -143,7 +143,7 @@ function ExplorePage() {
             <Switch
               id="past"
               checked={includePast}
-              onCheckedChange={(c) => navigate({ search: (p) => ({ ...p, includePast: c }) })}
+              onCheckedChange={(c) => navigate({ search: (p: ExploreSearch) => ({ ...p, includePast: c }) })}
             />
             <Label htmlFor="past" className="font-normal">Include past events</Label>
           </div>
