@@ -64,6 +64,7 @@ function AcceptInvitePage() {
           )}
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }
