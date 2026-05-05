@@ -9,6 +9,18 @@ export const Route = createFileRoute("/")({
 function Index() {
   const { user, loading, signOut } = useAuth();
 
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div
+          className="h-8 w-8 animate-spin rounded-full border-2 border-muted border-t-primary"
+          role="status"
+          aria-label="Loading"
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-background px-4 text-center">
       <div className="space-y-3">
@@ -18,7 +30,7 @@ function Index() {
         </p>
       </div>
       <div className="flex gap-3">
-        {loading ? null : user ? (
+        {user ? (
           <>
             <Button asChild>
               <Link to="/account">My account</Link>
