@@ -55,6 +55,9 @@ function AccountPage() {
               <Button asChild className="w-full">
                 <Link to="/my-events">My events</Link>
               </Button>
+              <Button asChild variant="secondary" className="w-full">
+                <Link to="/host/members">Host members</Link>
+              </Button>
             </>
           )}
           <Button asChild variant="secondary" className="w-full">
