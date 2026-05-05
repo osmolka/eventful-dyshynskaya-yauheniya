@@ -118,9 +118,14 @@ function HostDashboardPage() {
             <h1 className="text-3xl font-bold tracking-tight">Host dashboard</h1>
             <p className="text-sm text-muted-foreground">Overview of your events.</p>
           </div>
-          <Button asChild>
-            <Link to="/events/new">New event</Link>
-          </Button>
+          <div className="flex gap-2">
+            <Button asChild variant="outline">
+              <Link to="/host/reports">Reports</Link>
+            </Button>
+            <Button asChild>
+              <Link to="/events/new">New event</Link>
+            </Button>
+          </div>
         </header>
 
         <Section title="Upcoming events" events={upcoming} emptyText="No upcoming events." />
