@@ -12,6 +12,7 @@ import { toast } from "sonner";
 
 const authSearchSchema = z.object({
   redirect: fallback(z.string(), "/").default("/"),
+  mode: fallback(z.enum(["signin", "signup"]), "signin").default("signin"),
 });
 
 export const Route = createFileRoute("/auth")({
