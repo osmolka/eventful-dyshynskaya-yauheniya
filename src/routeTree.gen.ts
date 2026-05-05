@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HostsHostIdRouteImport } from './routes/hosts.$hostId'
 import { Route as AuthenticatedBecomeHostRouteImport } from './routes/_authenticated/become-host'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 
@@ -27,6 +28,11 @@ const AuthenticatedRoute = AuthenticatedRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HostsHostIdRoute = HostsHostIdRouteImport.update({
+  id: '/hosts/$hostId',
+  path: '/hosts/$hostId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedBecomeHostRoute = AuthenticatedBecomeHostRouteImport.update({
@@ -45,12 +51,14 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/account': typeof AuthenticatedAccountRoute
   '/become-host': typeof AuthenticatedBecomeHostRoute
+  '/hosts/$hostId': typeof HostsHostIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/account': typeof AuthenticatedAccountRoute
   '/become-host': typeof AuthenticatedBecomeHostRoute
+  '/hosts/$hostId': typeof HostsHostIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -59,12 +67,13 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/_authenticated/become-host': typeof AuthenticatedBecomeHostRoute
+  '/hosts/$hostId': typeof HostsHostIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/account' | '/become-host'
+  fullPaths: '/' | '/auth' | '/account' | '/become-host' | '/hosts/$hostId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/account' | '/become-host'
+  to: '/' | '/auth' | '/account' | '/become-host' | '/hosts/$hostId'
   id:
     | '__root__'
     | '/'
@@ -72,12 +81,14 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/account'
     | '/_authenticated/become-host'
+    | '/hosts/$hostId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AuthRoute: typeof AuthRoute
+  HostsHostIdRoute: typeof HostsHostIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -101,6 +112,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hosts/$hostId': {
+      id: '/hosts/$hostId'
+      path: '/hosts/$hostId'
+      fullPath: '/hosts/$hostId'
+      preLoaderRoute: typeof HostsHostIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/become-host': {
@@ -138,6 +156,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AuthRoute: AuthRoute,
+  HostsHostIdRoute: HostsHostIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

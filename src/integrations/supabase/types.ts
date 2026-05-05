@@ -14,6 +14,47 @@ export type Database = {
   }
   public: {
     Tables: {
+      hosts: {
+        Row: {
+          bio: string | null
+          contact_email: string
+          created_at: string
+          id: string
+          logo_url: string | null
+          name: string
+          profile_id: string
+          updated_at: string
+        }
+        Insert: {
+          bio?: string | null
+          contact_email: string
+          created_at?: string
+          id?: string
+          logo_url?: string | null
+          name: string
+          profile_id: string
+          updated_at?: string
+        }
+        Update: {
+          bio?: string | null
+          contact_email?: string
+          created_at?: string
+          id?: string
+          logo_url?: string | null
+          name?: string
+          profile_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hosts_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string
