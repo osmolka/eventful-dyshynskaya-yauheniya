@@ -13,6 +13,7 @@ import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as InvitesTokenRouteImport } from './routes/invites.$token'
 import { Route as HostsHostIdRouteImport } from './routes/hosts.$hostId'
 import { Route as EventsEventIdRouteImport } from './routes/events.$eventId'
 import { Route as AuthenticatedMyTicketsRouteImport } from './routes/_authenticated/my-tickets'
@@ -41,6 +42,11 @@ const AuthenticatedRoute = AuthenticatedRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InvitesTokenRoute = InvitesTokenRouteImport.update({
+  id: '/invites/$token',
+  path: '/invites/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HostsHostIdRoute = HostsHostIdRouteImport.update({
@@ -107,6 +113,7 @@ export interface FileRoutesByFullPath {
   '/my-tickets': typeof AuthenticatedMyTicketsRoute
   '/events/$eventId': typeof EventsEventIdRoute
   '/hosts/$hostId': typeof HostsHostIdRoute
+  '/invites/$token': typeof InvitesTokenRoute
   '/events/new': typeof AuthenticatedEventsNewRoute
   '/host/members': typeof AuthenticatedHostMembersRoute
   '/tickets/$ticketId': typeof AuthenticatedTicketsTicketIdRoute
@@ -122,6 +129,7 @@ export interface FileRoutesByTo {
   '/my-tickets': typeof AuthenticatedMyTicketsRoute
   '/events/$eventId': typeof EventsEventIdRoute
   '/hosts/$hostId': typeof HostsHostIdRoute
+  '/invites/$token': typeof InvitesTokenRoute
   '/events/new': typeof AuthenticatedEventsNewRoute
   '/host/members': typeof AuthenticatedHostMembersRoute
   '/tickets/$ticketId': typeof AuthenticatedTicketsTicketIdRoute
@@ -139,6 +147,7 @@ export interface FileRoutesById {
   '/_authenticated/my-tickets': typeof AuthenticatedMyTicketsRoute
   '/events/$eventId': typeof EventsEventIdRoute
   '/hosts/$hostId': typeof HostsHostIdRoute
+  '/invites/$token': typeof InvitesTokenRoute
   '/_authenticated/events/new': typeof AuthenticatedEventsNewRoute
   '/_authenticated/host/members': typeof AuthenticatedHostMembersRoute
   '/_authenticated/tickets/$ticketId': typeof AuthenticatedTicketsTicketIdRoute
@@ -156,6 +165,7 @@ export interface FileRouteTypes {
     | '/my-tickets'
     | '/events/$eventId'
     | '/hosts/$hostId'
+    | '/invites/$token'
     | '/events/new'
     | '/host/members'
     | '/tickets/$ticketId'
@@ -171,6 +181,7 @@ export interface FileRouteTypes {
     | '/my-tickets'
     | '/events/$eventId'
     | '/hosts/$hostId'
+    | '/invites/$token'
     | '/events/new'
     | '/host/members'
     | '/tickets/$ticketId'
@@ -187,6 +198,7 @@ export interface FileRouteTypes {
     | '/_authenticated/my-tickets'
     | '/events/$eventId'
     | '/hosts/$hostId'
+    | '/invites/$token'
     | '/_authenticated/events/new'
     | '/_authenticated/host/members'
     | '/_authenticated/tickets/$ticketId'
@@ -200,6 +212,7 @@ export interface RootRouteChildren {
   ExploreRoute: typeof ExploreRoute
   EventsEventIdRoute: typeof EventsEventIdRoute
   HostsHostIdRoute: typeof HostsHostIdRoute
+  InvitesTokenRoute: typeof InvitesTokenRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -230,6 +243,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invites/$token': {
+      id: '/invites/$token'
+      path: '/invites/$token'
+      fullPath: '/invites/$token'
+      preLoaderRoute: typeof InvitesTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/hosts/$hostId': {
@@ -339,6 +359,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExploreRoute: ExploreRoute,
   EventsEventIdRoute: EventsEventIdRoute,
   HostsHostIdRoute: HostsHostIdRoute,
+  InvitesTokenRoute: InvitesTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
