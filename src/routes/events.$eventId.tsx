@@ -163,6 +163,14 @@ function EventDetailPage() {
           </p>
         </div>
 
+        <div>
+          <Button asChild variant="outline" size="sm">
+            <Link to="/events/$eventId/gallery" params={{ eventId }}>
+              View photo gallery
+            </Link>
+          </Button>
+        </div>
+
         {event.description && (
           <Card>
             <CardHeader>

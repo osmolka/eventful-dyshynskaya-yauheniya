@@ -162,6 +162,11 @@ function Section({ title, events, emptyText }: { title: string; events: EventRow
                       Feedback
                     </Link>
                   </Button>
+                  <Button asChild size="sm" variant="outline">
+                    <Link to="/events/$eventId/photos" params={{ eventId: e.id }}>
+                      Photos
+                    </Link>
+                  </Button>
                 </div>
               </CardHeader>
               <CardContent>
