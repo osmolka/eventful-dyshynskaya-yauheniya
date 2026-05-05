@@ -160,7 +160,27 @@ function CheckInPage() {
     }
     toast.success(`Checked in: ${normalized}`);
     setLastResult(`✓ Checked in: ${normalized}`);
+    setLastCheckIn({ ticketId: ticket.id, code: normalized });
     setCode("");
+    refreshCounts();
+  };
+
+  const handleUndo = async () => {
+    if (!lastCheckIn) return;
+    setUndoing(true);
+    const { error } = await supabase
+      .from("tickets")
+      .update({ checked_in_at: null, checked_in_by: null })
+      .eq("id", lastCheckIn.ticketId)
+      .not("checked_in_at", "is", null);
+    setUndoing(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success(`Undid check-in: ${lastCheckIn.code}`);
+    setLastResult(`Undid check-in: ${lastCheckIn.code}`);
+    setLastCheckIn(null);
     refreshCounts();
   };
 
