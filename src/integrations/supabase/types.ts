@@ -76,6 +76,35 @@ export type Database = {
           },
         ]
       }
+      host_checkers: {
+        Row: {
+          created_at: string
+          host_id: string
+          id: string
+          profile_id: string
+        }
+        Insert: {
+          created_at?: string
+          host_id: string
+          id?: string
+          profile_id: string
+        }
+        Update: {
+          created_at?: string
+          host_id?: string
+          id?: string
+          profile_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "host_checkers_host_id_fkey"
+            columns: ["host_id"]
+            isOneToOne: false
+            referencedRelation: "hosts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       hosts: {
         Row: {
           bio: string | null
@@ -178,18 +207,24 @@ export type Database = {
       }
       tickets: {
         Row: {
+          checked_in_at: string | null
+          checked_in_by: string | null
           code: string
           created_at: string
           id: string
           rsvp_id: string
         }
         Insert: {
+          checked_in_at?: string | null
+          checked_in_by?: string | null
           code: string
           created_at?: string
           id?: string
           rsvp_id: string
         }
         Update: {
+          checked_in_at?: string | null
+          checked_in_by?: string | null
           code?: string
           created_at?: string
           id?: string
@@ -210,6 +245,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_check_in_event: { Args: { _event_id: string }; Returns: boolean }
       generate_ticket_code: { Args: never; Returns: string }
       promote_waitlist: { Args: { _event_id: string }; Returns: undefined }
     }
