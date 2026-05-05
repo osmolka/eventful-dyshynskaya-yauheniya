@@ -181,7 +181,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      promote_waitlist: { Args: { _event_id: string }; Returns: undefined }
     }
     Enums: {
       app_role: "attendee" | "host" | "checker"
